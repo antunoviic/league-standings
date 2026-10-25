@@ -1,0 +1,43 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      SECRET_KEY: change-me
+      MYSQL_HOST: mariadb
+      MYSQL_USER: league
+      MYSQL_PASSWORD: league
+      MYSQL_DATABASE: league
+      MONGO_HOST: mongodb
+      MONGO_DATABASE: league
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      mongodb:
+        condition: service_started
+
+  mariadb:
+    image: mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: league
+      MARIADB_USER: league
+      MARIADB_PASSWORD: league
+    volumes:
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - mariadb-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  mongodb:
+    image: mongo:7
+    volumes:
+      - mongodb-data:/data/db
+
+volumes:
+  mariadb-data:
+  mongodb-data:

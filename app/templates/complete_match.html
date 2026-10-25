@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Complete Match - League Standings{% endblock %}
+
+{% block content %}
+    <h2>Complete Match <span class="db-badge sql">SQL</span></h2>
+
+    <div class="card">
+        <h3>Select Ongoing Match</h3>
+
+        <form method="GET" action="/complete-match">
+            <label for="match_id">Match:</label>
+            <select name="match_id" id="match_id" onchange="this.form.submit()">
+                <option value="">-- Select match --</option>
+                {% for match in matches %}
+                    <option value="{{ match.match_id }}"
+                        {% if selected_match_id == match.match_id %}selected{% endif %}>
+                        {{ match.home_club_name }} {{ match.home_score }}
+                        -
+                        {{ match.away_score }} {{ match.away_club_name }}
+                        ({{ match.match_date }})
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+
+        {% if not matches %}
+            <p>No ongoing matches available.</p>
+        {% endif %}
+    </div>
+
+    {% if selected_match %}
+        <div class="card">
+            <h3>Match Summary</h3>
+            <h4>
+                {{ selected_match.home_club_name }}
+                {{ selected_match.home_score }}
+                &ndash;
+                {{ selected_match.away_score }}
+                {{ selected_match.away_club_name }}
+            </h4>
+            <p>Date: {{ selected_match.match_date }} &nbsp;|&nbsp; Season: {{ selected_match.season_year }}</p>
+
+            <form method="POST" action="/complete-match">
+                <input type="hidden" name="match_id" value="{{ selected_match.match_id }}">
+                <button type="submit">Complete Match</button>
+            </form>
+        </div>
+    {% endif %}
+
+    {% if standings %}
+        <div class="card">
+            <h3>Season {{ selected_season_year }} Standings</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Club</th>
+                        <th>MP</th>
+                        <th>W</th>
+                        <th>D</th>
+                        <th>L</th>
+                        <th>Pts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in standings %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ row.club_name }}</td>
+                            <td>{{ row.matches_played }}</td>
+                            <td>{{ row.wins }}</td>
+                            <td>{{ row.draws }}</td>
+                            <td>{{ row.losses }}</td>
+                            <td><strong>{{ row.points }}</strong></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+{% endblock %}

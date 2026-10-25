@@ -1,0 +1,57 @@
+:root {
+    --bg: #f5f6f8;
+    --card: #ffffff;
+    --text: #1f2933;
+    --muted: #616e7c;
+    --accent: #1d6f42;
+    --border: #e4e7eb;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+
+.topbar { background: var(--accent); color: #fff; margin-bottom: 24px; }
+.topbar-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; }
+.topbar a { color: #fff; text-decoration: none; }
+.brand { font-weight: 700; font-size: 1.15rem; }
+.topbar nav { display: flex; flex-wrap: wrap; gap: 16px; }
+
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; margin-bottom: 16px; }
+.card h3 { margin-top: 0; }
+
+button, .button {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    border: 0;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+button:hover, .button:hover { filter: brightness(1.1); }
+
+select { padding: 6px 8px; border-radius: 6px; border: 1px solid var(--border); max-width: 100%; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+th { color: var(--muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+
+.message { padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; }
+.message.success { background: #e3f9e5; color: #05400a; }
+.message.error { background: #ffe3e3; color: #610404; }
+
+.db-badge { font-size: 0.7rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; vertical-align: middle; }
+.db-badge.sql { background: #e0e8f9; color: #19216c; }
+.db-badge.mongo { background: #e3f9e5; color: #05400a; }
+.topbar .db-badge { background: rgba(255, 255, 255, 0.2); color: #fff; }

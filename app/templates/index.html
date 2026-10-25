@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Getting started</h2>
+
+    <div class="card">
+        <h3>1. Load demo data</h3>
+        <p>Fills MariaDB with one league, eight clubs and a season in which the first rounds are played
+           and one round is currently in progress.</p>
+        <form method="POST" action="{{ url_for('main.reset_data') }}">
+            <button type="submit">Reset demo data</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>2. Complete a match in SQL</h3>
+        <p>Pick an ongoing match, complete it and watch the league table update.</p>
+        <a class="button" href="{{ url_for('complete_match.complete_match_page') }}">Open</a>
+    </div>
+
+    <div class="card">
+        <h3>3. Migrate to MongoDB</h3>
+        <p>Copies the relational data into a document model (standings embedded in the season).</p>
+        <form method="POST" action="{{ url_for('main.migrate_to_mongodb') }}">
+            <button type="submit">Migrate SQL &rarr; MongoDB</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>4. Complete a match in MongoDB</h3>
+        <p>The same use case, implemented against the document model.</p>
+        <a class="button" href="{{ url_for('complete_match_mongo.complete_match_mongo_page') }}">Open</a>
+    </div>
+{% endblock %}
